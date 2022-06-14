@@ -1,0 +1,1 @@
+type ShoppingListItems = Array<string>;

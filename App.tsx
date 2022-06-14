@@ -5,9 +5,11 @@ import {
   VStack,
   Center,
   extendTheme,
-  Checkbox
+  Input,
+  Button
 } from 'native-base';
 import { useState } from 'react';
+import { DisplayItems } from './components/DisplayItems';
 
 const config = {
   useSystemColorMode: false,
@@ -18,26 +20,45 @@ const config = {
 const customTheme = extendTheme({ config });
 
 const App = () => {
-  const [groupValues, setGroupValues] = useState([]);
+  const [formData, setData] = useState({ item: '' });
+  const [shoppingList, setShoppingList] = useState([
+    'Milk'
+  ] as ShoppingListItems);
+
+  const onSubmit = () => {
+    setShoppingList([...shoppingList, formData.item]);
+    setData({ item: '' });
+  };
+
   return (
     <NativeBaseProvider theme={customTheme}>
-      <Center>
-        <Container>
-          <VStack space={4} alignItems="center">
-            <Heading color="black">My Shopping List</Heading>
-            <Center w="64" h="20" bg="indigo.300" rounded="md" shadow={3}>
-              <Checkbox.Group
-                onChange={setGroupValues}
-                value={groupValues}
-                accessibilityLabel="choose numbers"
-              >
-                <Checkbox value="one" my={2}>
-                  Milk
-                </Checkbox>
-              </Checkbox.Group>
-            </Center>
-            <Center w="64" h="20" bg="indigo.500" rounded="md" shadow={3} />
-            <Center w="64" h="20" bg="indigo.700" rounded="md" shadow={3} />
+      <Center bg='darkBlue.900' minH='100%' safeAreaTop={8}>
+        <Container centerContent>
+          <VStack space={4} alignItems='center'>
+            <Heading>My Shopping List</Heading>
+            <Input
+              size='xl'
+              value={formData.item}
+              type='text'
+              borderColor='white'
+              placeholder='Start adding some items...'
+              onChangeText={(value) => setData({ ...formData, item: value })}
+              onSubmitEditing={onSubmit}
+              InputRightElement={
+                <Button
+                  size='xs'
+                  rounded='none'
+                  w='1/6'
+                  h='full'
+                  onPress={onSubmit}
+                >
+                  Add
+                </Button>
+              }
+            />
+            {shoppingList && (
+              <DisplayItems items={shoppingList} updateList={setShoppingList} />
+            )}
           </VStack>
         </Container>
       </Center>

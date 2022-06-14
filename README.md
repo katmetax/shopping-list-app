@@ -16,7 +16,7 @@ Finally a shopping list app that works and is decent.
 
 [ ] Delete items
 
-[ ]Paste text and it will add each individual item separately
+[ ] Paste text and it will add each individual item separately
 
 
 ### Future features
