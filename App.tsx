@@ -26,8 +26,10 @@ const App = () => {
   ] as ShoppingListItems);
 
   const onSubmit = () => {
-    setShoppingList([...shoppingList, formData.item]);
-    setData({ item: '' });
+    if (formData.item) {
+      setShoppingList([...shoppingList, formData.item]);
+      setData({ item: '' });
+    }
   };
 
   return (
@@ -41,12 +43,12 @@ const App = () => {
               value={formData.item}
               type='text'
               borderColor='white'
-              placeholder='Start adding some items...'
+              placeholder='Add some items...'
               onChangeText={(value) => setData({ ...formData, item: value })}
               onSubmitEditing={onSubmit}
               InputRightElement={
                 <Button
-                  size='xs'
+                  size='md'
                   rounded='none'
                   w='1/6'
                   h='full'
